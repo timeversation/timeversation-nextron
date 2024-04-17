@@ -1,0 +1,15 @@
+appId: com.wonglok.timeversation
+productName: Lok Lok
+copyright: Copyright © 2024 Lok Wong 
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+protocols:
+  name: timeversation
+  schemes: [timeversation]
+publish: null
