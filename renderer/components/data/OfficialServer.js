@@ -16,12 +16,11 @@ const OFFICIAL_PROFILES = {
     }
 }
 
-const CURRENT_PROFILE = OFFICIAL_PROFILES[process.env.NODE_ENV]
+const CURRENT_OFFICIAL_PROFILE = OFFICIAL_PROFILES[process.env.NODE_ENV]
 
-if (CURRENT_PROFILE.NODE_ENV === 'development') {
-    CURRENT_PROFILE.rest = window.location.origin
-    CURRENT_PROFILE.socket = "ws://" + window.location.host
+if (CURRENT_OFFICIAL_PROFILE.NODE_ENV === 'development') {
+    CURRENT_OFFICIAL_PROFILE.rest = window.location.origin
+    CURRENT_OFFICIAL_PROFILE.socket = "ws://" + window.location.host
 }
 
-
-export { OFFICIAL_PROFILES, CURRENT_PROFILE }
+export { OFFICIAL_PROFILES, CURRENT_OFFICIAL_PROFILE }
