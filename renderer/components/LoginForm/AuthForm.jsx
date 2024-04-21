@@ -1,25 +1,25 @@
 import { useState } from "react"
 
 export function AuthForm() {
-    let activeAuth = "text-yellow-500 underline"
-    let inactiveAuth = "text-gray-500"
+    let activeAuth = " w-20 text-green-600 border-b-2 border-green-500"
+    let inactiveAuth = " w-20 text-gray-500 "
     let [chosenAuth, setChosenAuth] = useState('register')
 
     return <>
         <div className="relative flex flex-col break-words w-full rounded-lg bg-blueGray-200 border-0 ">
-            <div className="text-center">
-                <button onClick={() => {
-                    setChosenAuth('login')
-                }} className={chosenAuth === 'login' ? activeAuth : inactiveAuth}>
-                    Login
-                </button>
-                <span className=" text-xs mx-5">
-                    or
-                </span>
+            <div className="text-center flex justify-center">
                 <button onClick={() => {
                     setChosenAuth('register')
                 }} className={chosenAuth === 'register' ? activeAuth : inactiveAuth}>
                     Register
+                </button>
+                <span className=" text-xs mx-5">
+
+                </span>
+                <button onClick={() => {
+                    setChosenAuth('login')
+                }} className={chosenAuth === 'login' ? activeAuth : inactiveAuth}>
+                    Login
                 </button>
             </div>
 
@@ -41,7 +41,7 @@ function Login() {
                     className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                 >
-                    Email
+                    Email / Username
                 </label>
                 <input
                     type="email"
@@ -49,19 +49,7 @@ function Login() {
                     placeholder="Email"
                 />
             </div>
-            <div className="relative w-full mb-3">
-                <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                >
-                    Password
-                </label>
-                <input
-                    type="password"
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    placeholder="Password"
-                />
-            </div>
+
             <div className="text-center mt-6">
                 <button
                     className={cta}
@@ -94,6 +82,19 @@ function Register() {
             <div className="relative w-full mb-3">
                 <label
                     className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-username"
+                >
+                    Username
+                </label>
+                <input
+                    type="text"
+                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    placeholder="Username"
+                />
+            </div>
+            <div className="relative w-full mb-3">
+                <label
+                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                 >
                     Password
@@ -105,12 +106,13 @@ function Register() {
                 />
             </div>
             <div className="text-center mt-6">
-                {<button
+                <button
                     className={cta}
                     type="button"
                 >
                     Register
-                </button>}
+                </button>
             </div>
-        </form></>
+        </form>
+    </>
 }
