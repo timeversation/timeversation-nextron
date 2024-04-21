@@ -21,42 +21,42 @@ const getMainWindowWhenReady = async () => {
   return mainWindow
 }
 
-  ; (async () => {
-    const shouldContinue = checkLauncherUrl(getMainWindowWhenReady)
-    if (!shouldContinue) return
+(async () => {
+  const shouldContinue = checkLauncherUrl(getMainWindowWhenReady)
+  if (!shouldContinue) return
 
-    await app.whenReady()
+  await app.whenReady()
 
-    // ipcMain.on('hi', (r, data) => {
-    //   console.log(data)
+  // ipcMain.on('hi', (r, data) => {
+  //   console.log(data)
+  //   r.reply('message', data + Math.random() + 'Hyoyoyo!')
+  // })
 
-    //   r.reply('message', data + Math.random() + 'Hyoyoyo!')
-    // })
+  ipcMain.once('window-is-ready', () => {
+    windowIsReady = true
+  })
 
-    ipcMain.once('window-is-ready', () => {
-      windowIsReady = true
-    })
+  mainWindow = createWindow('main', {
+    width: 1000,
+    height: 650,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+    },
+  })
+  mainWindow.webContents.addListener('launcher-url', (event, arg) => {
+    console.log('launcher-url', arg)
+  })
 
-    mainWindow = createWindow('main', {
-      width: 1000,
-      height: 650,
-      webPreferences: {
-        preload: path.join(__dirname, 'preload.js'),
-      },
-    })
-    mainWindow.webContents.on('launcher-url', (url) => {
-      ipcMain.send('launcher-url', url);
-    })
 
-    if (isProd) {
-      //
-      await mainWindow.loadURL('app://./home')
-    } else {
-      const port = process.argv[2]
-      await mainWindow.loadURL(`http://localhost:${port}/home`)
-      mainWindow.webContents.openDevTools()
-    }
-  })()
+  if (isProd) {
+    //
+    await mainWindow.loadURL('app://./home')
+  } else {
+    const port = process.argv[2]
+    await mainWindow.loadURL(`http://localhost:${port}/home`)
+    mainWindow.webContents.openDevTools()
+  }
+})();
 
 app.on('window-all-closed', () => {
   app.quit()
@@ -100,6 +100,8 @@ function checkLauncherUrl(getMainWindow) {
         mainWindow.webContents.send('launcher-url', url);
       })
   }
+
+
 
   return true
 }
