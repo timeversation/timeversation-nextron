@@ -72,6 +72,7 @@ export const createWindow = (windowName, options) => {
     },
   })
 
+
   win.on('close', saveState)
 
   return win

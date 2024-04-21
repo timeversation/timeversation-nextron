@@ -27,11 +27,11 @@ const getMainWindowWhenReady = async () => {
 
     await app.whenReady()
 
-    ipcMain.on('hi', (r, data) => {
-      console.log(data)
+    // ipcMain.on('hi', (r, data) => {
+    //   console.log(data)
 
-      r.reply('message', data + Math.random() + 'Hyoyoyo!')
-    })
+    //   r.reply('message', data + Math.random() + 'Hyoyoyo!')
+    // })
 
     ipcMain.once('window-is-ready', () => {
       windowIsReady = true
@@ -44,8 +44,12 @@ const getMainWindowWhenReady = async () => {
         preload: path.join(__dirname, 'preload.js'),
       },
     })
+    mainWindow.webContents.on('launcher-url', (url) => {
+      ipcMain.send('launcher-url', url);
+    })
 
     if (isProd) {
+      //
       await mainWindow.loadURL('app://./home')
     } else {
       const port = process.argv[2]
@@ -62,7 +66,7 @@ function checkLauncherUrl(getMainWindow) {
   if (process.platform === 'darwin') {
     app.on('open-url', async (_event, url) => {
       const mainWindow = await getMainWindow()
-      mainWindow.webContents.send('launcher-url', url)
+      mainWindow.webContents.send('launcher-url', url);
       mainWindow.isMinimized() && mainWindow.restore()
     })
   }
@@ -82,7 +86,7 @@ function checkLauncherUrl(getMainWindow) {
       const url = args.find((arg) =>
         arg.startsWith(`${'timeversation'}://`)
       )
-      url && mainWindow.webContents.send('launcher-url', url)
+      url && mainWindow.webContents.send('launcher-url', url);
 
       mainWindow.isMinimized() && mainWindow.restore()
       mainWindow.focus()
@@ -92,9 +96,9 @@ function checkLauncherUrl(getMainWindow) {
       arg.startsWith(`${'timeversation'}://`)
     )
     url &&
-      getMainWindow().then((mainWindow) =>
-        mainWindow.webContents.send('launcher-url', url)
-      )
+      getMainWindow().then((mainWindow) => {
+        mainWindow.webContents.send('launcher-url', url);
+      })
   }
 
   return true

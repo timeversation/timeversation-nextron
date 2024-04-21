@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { OfficalLoginForm } from '../components/LoginForm/OfficalLoginForm'
 import { SelfHostLoginForm } from '../components/LoginForm/SelfHostLoginForm'
+import { TestIPCWeb } from '../components/UI/TestIPC/TestIPCWeb'
 // import { Popup } from './_app'
 
 export default function HomePage() {
@@ -27,7 +28,7 @@ export default function HomePage() {
             <p className="max-w-lg mt-4 text-gray-500">
               Save time with your words.
             </p>
-
+            <TestIPCWeb></TestIPCWeb>
             <div className="mt-6 flex items-center justify-center mb-5">
               <a
                 onClick={() => {
