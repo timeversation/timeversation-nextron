@@ -43,11 +43,6 @@ const getMainWindowWhenReady = async () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   })
-  // mainWindow.webContents.on('launcher-url', (event, arg) => {
-  //   console.log('launcher-url', event, arg)
-  //   ipcMain.emit('launcher-url', { event, arg })
-  //   ipcRenderer.emit('launcher-url', { event, arg })
-  // })
 
   if (isProd) {
     //
@@ -67,9 +62,8 @@ function checkLauncherUrl(getMainWindow) {
   if (process.platform === 'darwin') {
     app.on('open-url', async (_event, url) => {
       const mainWindow = await getMainWindow()
-      mainWindow.webContents.send('launcher-url', url);
-      ipcMain.emit('launcher-url', { _event, arg })
-      ipcRenderer.emit('launcher-url', { _event, arg })
+      mainWindow.webContents.send('launcher-url', url)
+      ipcMain.emit('launcher-url', url)
       mainWindow.isMinimized() && mainWindow.restore()
     })
   }
@@ -78,7 +72,7 @@ function checkLauncherUrl(getMainWindow) {
     const gotTheLock = app.requestSingleInstanceLock()
     if (!gotTheLock) {
       app.quit()
-      return false
+      return
     }
 
     app.setAsDefaultProtocolClient('timeversation')
@@ -90,6 +84,7 @@ function checkLauncherUrl(getMainWindow) {
         arg.startsWith(`${'timeversation'}://`)
       )
       url && mainWindow.webContents.send('launcher-url', url);
+      url && ipcMain.emit('launcher-url', url)
 
       mainWindow.isMinimized() && mainWindow.restore()
       mainWindow.focus()
@@ -101,6 +96,7 @@ function checkLauncherUrl(getMainWindow) {
     url &&
       getMainWindow().then((mainWindow) => {
         mainWindow.webContents.send('launcher-url', url);
+        ipcMain.emit('launcher-url', url)
       })
   }
 

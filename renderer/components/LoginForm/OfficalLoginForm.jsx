@@ -10,5 +10,7 @@ export function OfficalLoginForm() {
         useServer.getState().setBackend({ serverOwner: 'official', socket, rest })
     }, [])
 
-    return <AuthForm></AuthForm>
+    return <>
+        <AuthForm></AuthForm>
+    </>
 }

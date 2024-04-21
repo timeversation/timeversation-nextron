@@ -1,13 +1,13 @@
 import { useState } from "react"
 
 export function AuthForm() {
-    let activeAuth = " w-20 text-green-600 border-b-2 border-green-500"
-    let inactiveAuth = " w-20 text-gray-500 "
+    let activeAuth = " w-24 text-center text-green-600 pb-2 border-b-2 border-green-500"
+    let inactiveAuth = " w-24 text-center text-gray-500 pb-2 border-b-2 border-gray-500 "
     let [chosenAuth, setChosenAuth] = useState('register')
 
     return <>
-        <div className="relative flex flex-col break-words w-full rounded-lg bg-blueGray-200 border-0 ">
-            <div className="text-center flex justify-center">
+        <div className="relative w-3/4 bg-blueGray-200 border-0">
+            <div className="flex justify-center">
                 <button onClick={() => {
                     setChosenAuth('register')
                 }} className={chosenAuth === 'register' ? activeAuth : inactiveAuth}>
@@ -41,12 +41,26 @@ function Login() {
                     className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-password"
                 >
-                    Email / Username
+                    Username
                 </label>
                 <input
                     type="email"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     placeholder="Email"
+                />
+            </div>
+
+            <div className="relative w-full mb-3">
+                <label
+                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                >
+                    Password
+                </label>
+                <input
+                    type="password"
+                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    placeholder="Password"
                 />
             </div>
 
@@ -66,19 +80,6 @@ function Register() {
 
     return <>
         <form>
-            <div className="relative w-full mb-3">
-                <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                >
-                    Email
-                </label>
-                <input
-                    type="email"
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    placeholder="Email"
-                />
-            </div>
             <div className="relative w-full mb-3">
                 <label
                     className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
