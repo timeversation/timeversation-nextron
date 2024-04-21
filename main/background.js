@@ -1,5 +1,5 @@
 import path from 'path'
-import { app, ipcMain } from 'electron'
+import { app, ipcMain, ipcRenderer } from 'electron'
 import serve from 'electron-serve'
 import { createWindow } from './helpers'
 
@@ -43,10 +43,11 @@ const getMainWindowWhenReady = async () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   })
-  mainWindow.webContents.addListener('launcher-url', (event, arg) => {
-    console.log('launcher-url', arg)
-  })
-
+  // mainWindow.webContents.on('launcher-url', (event, arg) => {
+  //   console.log('launcher-url', event, arg)
+  //   ipcMain.emit('launcher-url', { event, arg })
+  //   ipcRenderer.emit('launcher-url', { event, arg })
+  // })
 
   if (isProd) {
     //
@@ -67,6 +68,8 @@ function checkLauncherUrl(getMainWindow) {
     app.on('open-url', async (_event, url) => {
       const mainWindow = await getMainWindow()
       mainWindow.webContents.send('launcher-url', url);
+      ipcMain.emit('launcher-url', { _event, arg })
+      ipcRenderer.emit('launcher-url', { _event, arg })
       mainWindow.isMinimized() && mainWindow.restore()
     })
   }

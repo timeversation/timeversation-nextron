@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { OfficalLoginForm } from '../components/LoginForm/OfficalLoginForm'
 import { SelfHostLoginForm } from '../components/LoginForm/SelfHostLoginForm'
-import { TestIPCWeb } from '../components/UI/TestIPC/TestIPCWeb'
 // import { Popup } from './_app'
 
 export default function HomePage() {
@@ -20,15 +19,14 @@ export default function HomePage() {
         <title>Timeversation</title>
       </Head>
       <div className='bg-gray-100 p-2 w-full h-full'>
-        <section className="flex items-start px-24 py-12 mx-auto">
-          <div className="lg:w-1/2">
-            <h1 className="max-w-xl font-serif text-4xl font-medium tracking-wide text-[#343D33] capitalize md:text-6xl">
+        <section className="flex items-start max-w-3xl py-12 mx-auto">
+          <div className="">
+            <h1 className="max-w-xl font-serif font-medium tracking-wide text-[#343D33] capitalize text-6xl">
               Timeversation
             </h1>
             <p className="max-w-lg mt-4 text-gray-500">
               Save time with your words.
             </p>
-            <TestIPCWeb></TestIPCWeb>
             <div className="mt-6 flex items-center justify-center mb-5">
               <a
                 onClick={() => {
