@@ -39,7 +39,7 @@ const getMainWindowWhenReady = async () => {
 
     mainWindow = createWindow('main', {
       width: 1000,
-      height: 600,
+      height: 650,
       webPreferences: {
         preload: path.join(__dirname, 'preload.js'),
       },
