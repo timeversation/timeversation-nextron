@@ -1,12 +1,12 @@
 import { useState } from "react"
 
 export function AuthForm() {
-    let activeAuth = " w-24 text-center text-green-600 pb-2 border-b-2 border-green-500"
-    let inactiveAuth = " w-24 text-center text-gray-500 pb-2 border-b-2 border-gray-500 "
+    let activeAuth = "w-24 text-center text-green-600 pb-1 border-b border-green-500"
+    let inactiveAuth = "w-24 text-center text-gray-500 pb-1 border-b border-gray-500 "
     let [chosenAuth, setChosenAuth] = useState('register')
 
     return <>
-        <div className="relative w-3/4 bg-blueGray-200 border-0">
+        <div className="relative w-full bg-blueGray-200 border-0">
             <div className="flex justify-center">
                 <button onClick={() => {
                     setChosenAuth('register')
@@ -99,6 +99,19 @@ function Register() {
                     htmlFor="grid-password"
                 >
                     Password
+                </label>
+                <input
+                    type="password"
+                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    placeholder="Password"
+                />
+            </div>
+            <div className="relative w-full mb-3">
+                <label
+                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                >
+                    Confirm Password
                 </label>
                 <input
                     type="password"
