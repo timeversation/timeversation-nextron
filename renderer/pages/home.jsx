@@ -54,12 +54,8 @@ export default function HomePage() {
 
             </div>
           </div>
-          <div className="h-[24rem] w-[18rem] mt-12 lg:mt-0 mx-auto max-w-md overflow-hidden rounded-t-full outline outline-4 outline-offset-4 outline-[#475F45]/40">
-            <img
-              className="object-cover w-full h-full rounded-t-full"
-              src="/images/sincerely-media--gG86PdIzUA-unsplash.jpg"
-              alt="main page"
-            />
+          <div>
+
           </div>
         </section>
 

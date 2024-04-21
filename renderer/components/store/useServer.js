@@ -4,45 +4,57 @@ import { getProfile } from "../../timeversation.config";
 export const useServer = create((set, get) => {
 
     return {
-        party: `official`,
-        rest: ``,
-        socket: ``,
-        saveBackend: () => {
+        serverOwner: 'official',
+        rest: '',
+        socket: '',
+        access_token: ``,
+        saveBackendToLocalStorage: () => {
             let rest = get().rest
             let scoket = get().socket
-            let party = get().party
+            let serverOwner = get().serverOwner
+            let access_token = get().access_token
 
-            localStorage.setItem('timeverstaion:party', party)
+            localStorage.setItem('timeverstaion:access_token', access_token)
+            localStorage.setItem('timeverstaion:serverOwner', serverOwner)
             localStorage.setItem('timeverstaion:rest', rest)
             localStorage.setItem('timeverstaion:socket', scoket)
         },
-        loadBackend: () => {
+        loadBackendToLocalStorage: () => {
             let rest = localStorage.getItem('timeverstaion:rest')
             let socket = localStorage.getItem('timeverstaion:socket')
-            let party = localStorage.getItem('timeverstaion:party')
+            let serverOwner = localStorage.getItem('timeverstaion:serverOwner')
+            let access_token = localStorage.getItem('timeverstaion:access_token')
 
             set({
-                party: party,
+                access_token: access_token,
+                serverOwner: serverOwner,
                 rest: rest,
                 socket: socket,
             })
         },
-        setBackend: ({ type = 'official', socket, rest }) => {
-            if (type === 'official') {
-                let profile = getProfile()
-                set({
-                    party: type,
-                    socket: profile.socket,
-                    rest: profile.rest,
+        login: () => {
+            get().loadBackendToLocalStorage()
+            let rest = get().rest
+            fetch(`${rest}/login`, {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify({
+                    //
                 })
-            } else if (type === 'selfhost') {
-                set({
-                    party: type,
-                    socket: socket,
-                    rest: rest,
+            })
+                .then(res => res.json())
+                .then(data => {
+                    //
+                    console.log(data)
                 })
-            }
-            saveBackend()
+        },
+        setBackend: ({ serverOwner = 'official', socket, rest }) => {
+            set({
+                serverOwner: serverOwner,
+                socket: socket,
+                rest: rest,
+            })
+            get().saveBackendToLocalStorage()
         }
     }
 })
