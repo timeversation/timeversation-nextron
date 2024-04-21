@@ -63,13 +63,12 @@ function Login() {
                 />
             </div>
             <div className="text-center mt-6">
-                {<button
+                <button
                     className={cta}
                     type="button"
                 >
-                    {" "}
-                    Sign In{" "}
-                </button>}
+                    Sign In
+                </button>
             </div>
         </form></>
 }
