@@ -20,10 +20,10 @@ export const getProfile = () => {
 
     const CURRENT_OFFICIAL_PROFILE = OFFICIAL_PROFILES[process.env.NODE_ENV]
 
-    if (CURRENT_OFFICIAL_PROFILE.NODE_ENV === 'development') {
-        CURRENT_OFFICIAL_PROFILE.rest = window.location.origin
-        CURRENT_OFFICIAL_PROFILE.socket = "ws://" + window.location.host
-    }
+    // if (CURRENT_OFFICIAL_PROFILE.NODE_ENV === 'development') {
+    //     CURRENT_OFFICIAL_PROFILE.rest = window.location.origin
+    //     CURRENT_OFFICIAL_PROFILE.socket = "ws://" + window.location.host
+    // }
 
     return CURRENT_OFFICIAL_PROFILE
 }

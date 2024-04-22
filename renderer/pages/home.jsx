@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { OfficalLoginForm } from '../components/LoginForm/OfficalLoginForm'
 import { SelfHostLoginForm } from '../components/LoginForm/SelfHostLoginForm'
+import { useServer } from 'components/store/useServer'
+import { getProfile } from 'timeversation.config'
 // import { Popup } from './_app'
 
 export default function HomePage() {
@@ -11,13 +13,20 @@ export default function HomePage() {
   let inactive = "  w-64 bg-[white] text-[#475F45] hover:bg-[#475F45]/80 duration-300 transition-colors border-2 border-[#475F45] px-6 block text-center py-3 uppercase text-sm font-bold leading-4 tracking-widest"
 
   const [chosen, setChosen] = React.useState('official')
-
+  useEffect(() => {
+    if (chosen === 'official') {
+      let profile = getProfile()
+      useServer.getState().setBackend({ serverOwner: 'official', rest: profile.rest, socket: profile.socket })
+    } else {
+      useServer.getState().setBackend({ serverOwner: 'selfhost', rest: '', socket: '' })
+    }
+  }, [chosen])
   return (
     <React.Fragment>
       <Head>
         <title>Timeversation</title>
       </Head>
-      <div className='bg-gray-100 p-2 w-full h-full'>
+      <div className='bg-gray-100 p-2 w-full h-full overflow-scroll'>
         <section className="flex items-start justify-center max-w-3xl py-12 mx-auto">
           <div className=" ">
             <h1 className=" text-center font-serif font-medium tracking-wide text-[#343D33] capitalize text-6xl">

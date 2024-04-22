@@ -42,10 +42,11 @@ export const useServer = create((set, get) => {
 
         login: ({ username, password }) => {
             let rest = get().rest
-            fetch(`${rest}/login`, {
+            fetch(`${rest}/auth`, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify({
+                    action: 'login',
                     username,
                     password
                 })
@@ -56,5 +57,46 @@ export const useServer = create((set, get) => {
                     console.log(data)
                 })
         },
+
+
+        checkUsernameFreeToUse: async ({ username }) => {
+            let rest = get().rest
+            return fetch(`${rest}/auth`, {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify({
+                    action: 'checkUsernameFreeToUse',
+                    username,
+                })
+            })
+                .then(res => res.ok && res.json())
+                .then(() => {
+                    return true
+                }).catch(r => {
+                    console.error(r)
+                    return false
+                })
+        },
+
+        registerUser: async ({ username, password }) => {
+            let rest = get().rest
+            return fetch(`${rest}/auth`, {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify({
+                    action: 'registerUser',
+                    username,
+                    password
+                })
+            })
+                .then(async (res) => {
+                    return {
+                        ok: res.ok,
+                        data: await res.json()
+                    }
+                })
+        },
+
+
     }
 })
