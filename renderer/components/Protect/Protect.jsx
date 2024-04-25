@@ -34,6 +34,19 @@ export function Protect({ children, onOK = () => { } }) {
         })
     }, [])
 
+    useEffect(() => {
+        ; (async () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const { ipc: api } = window
+
+            api.onLauncherUrl((url) => {
+                console.log(url)
+            })
+
+            api.setWindowIsReady(true)
+        })()
+    }, [])
+
     return <>
         {children}
     </>

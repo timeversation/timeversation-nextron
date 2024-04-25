@@ -1,18 +1,23 @@
 import { useEffect } from 'react'
 import { Popup, Overlay } from '../components/UI/Overlay/Overlay'
 import '../components/global.css'
+import { Libre_Franklin } from 'next/font/google'
 import { Inter } from 'next/font/google'
-const newFont = Inter({ subsets: ['latin'], weights: ['100', '400', '700', 'variable'] })
+const titleFont = Libre_Franklin({ subsets: ['latin'], weights: ['variable'] })
+const paragraphFont = Inter({ subsets: ['latin'], weights: ['variable'] })
 
 export default function App({ Component, pageProps }) {
-    useEffect(() => {
-        //
-        //
-    }, [])
+  useEffect(() => {
+    //
+    //
+  }, [])
 
-    return <>
-        <style dangerouslySetInnerHTML={{
-            __html:/*css*/`
+  return <>
+    <style dangerouslySetInnerHTML={{
+      __html:/*css*/`
+      h1, h2, h3, h4, h5, h6{
+        font-family: ${titleFont.style.fontFamily} !important;
+      }
         /* Make clicks pass-through */
 #nprogress {
     pointer-events: none;
@@ -87,11 +92,11 @@ export default function App({ Component, pageProps }) {
     100% { transform: rotate(360deg); }
   }
         `}}></style>
-        <div className={`w-full h-full ${newFont.className}`}>
-            <Component {...pageProps} />
-        </div>
-        <Overlay></Overlay>
-    </>
+    <div className={`w-full h-full ${paragraphFont.className}`}>
+      <Component {...pageProps} />
+    </div>
+    <Overlay></Overlay>
+  </>
 }
 
 export { Popup }

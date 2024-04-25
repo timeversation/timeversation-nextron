@@ -4,12 +4,8 @@ import { OfficalLoginForm } from '../components/LoginForm/OfficalLoginForm'
 import { SelfHostLoginForm } from '../components/LoginForm/SelfHostLoginForm'
 import { useServer } from 'components/store/useServer'
 import { getProfile } from 'timeversation.config'
-// import { Popup } from './_app'
 
-//
 export default function HomePage() {
-  //
-
   let active = " w-64 bg-[#475F45] hover:bg-[#475F45]/80 duration-300 transition-colors border-2 border-[#475F45] px-6 block text-center py-3 uppercase text-sm font-bold leading-4 tracking-widest text-white"
   let inactive = "  w-64 bg-[white] text-[#475F45] hover:bg-[#475F45]/80 duration-300 transition-colors border-2 border-[#475F45] px-6 block text-center py-3 uppercase text-sm font-bold leading-4 tracking-widest"
 

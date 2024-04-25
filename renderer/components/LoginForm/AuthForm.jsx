@@ -3,8 +3,6 @@ import { useState } from "react"
 import { Register } from "./RegisterForm"
 
 // 
-// 
-//
 
 export function AuthForm() {
     let activeAuth = "w-24 text-center text-green-600 pb-1 border-b border-green-500"

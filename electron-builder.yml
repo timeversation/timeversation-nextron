@@ -1,6 +1,6 @@
 appId: com.wonglok.timeversation
 productName: Timeversation
-copyright: Copyright © 2024 Lok Wong 
+copyright: Copyright © 2024 Inter-Site Limited and Wong Lok 
 directories:
   output: dist
   buildResources: resources
@@ -13,3 +13,7 @@ protocols:
   name: timeversation
   schemes: [timeversation]
 publish: null
+# afterSign: electron-builder-notarize
+# mac: 
+#   hardenedRuntime: true
+#   entitlements: ./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist
