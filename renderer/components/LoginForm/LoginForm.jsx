@@ -61,12 +61,9 @@ function LoginStepUsername({ params = {}, setStep = () => { } }) {
                     setAlert(data.error)
                 } else {
                     setAlert('successful')
-
+                    NProgress.done()
                     setTimeout(() => {
-                        //
                         router.push('/app')
-                        NProgress.done()
-                        //
                     }, 1000)
                 }
             }).catch(({ data }) => {
