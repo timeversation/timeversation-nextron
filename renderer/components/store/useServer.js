@@ -6,26 +6,26 @@ export const useServer = create((set, get) => {
         serverOwner: 'official',
         rest: '',
         socket: '',
-        accessToken: ``,
-        saveBackendToLocalStorage: () => {
+        jwt: ``,
+        saveBackendToLocalStorage: async () => {
             let rest = get().rest
             let scoket = get().socket
             let serverOwner = get().serverOwner
-            let accessToken = get().accessToken
+            let jwt = get().jwt
 
-            localStorage.setItem('timeversation::accessToken', accessToken)
+            localStorage.setItem('timeversation::jwt', jwt)
             localStorage.setItem('timeversation::serverOwner', serverOwner)
             localStorage.setItem('timeversation::rest', rest)
             localStorage.setItem('timeversation::socket', scoket)
         },
-        loadBackendToLocalStorage: () => {
+        loadBackendFromLocalStorage: async () => {
             let rest = localStorage.getItem('timeversation::rest')
             let socket = localStorage.getItem('timeversation::socket')
             let serverOwner = localStorage.getItem('timeversation::serverOwner')
-            let accessToken = localStorage.getItem('timeversation::accessToken')
+            let jwt = localStorage.getItem('timeversation::jwt')
 
             set({
-                accessToken: accessToken,
+                jwt: jwt,
                 serverOwner: serverOwner,
                 rest: rest,
                 socket: socket,
@@ -96,7 +96,55 @@ export const useServer = create((set, get) => {
                     }
                 })
         },
+        loginUserPassword: async ({ username, password }) => {
+            let rest = get().rest
+            return fetch(`${rest}/auth`, {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify({
+                    action: 'loginUserPassword',
+                    username,
+                    password
+                })
+            })
+                .then(async (res) => {
+                    let data = await res.json()
+                    if (res.ok) {
+                        set({
+                            jwt: data.jwt
+                        })
+                        get().saveBackendToLocalStorage()
+                    }
 
+                    return {
+                        ok: res.ok,
+                        data: data
+                    }
+                })
+        },
+        verifyJWT: async ({ jwt }) => {
+            let rest = get().rest
+            return fetch(`${rest}/auth`, {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify({
+                    action: 'verifyJWT',
+                    jwt
+                })
+            })
+                .then(async (res) => {
+                    return {
+                        ok: res.ok,
+                        data: await res.json()
+                    }
+                })
+        },
+        logout: async ({ }) => {
+            set({
+                jwt: ''
+            })
+            await get().saveBackendToLocalStorage()
 
+        }
     }
 })
