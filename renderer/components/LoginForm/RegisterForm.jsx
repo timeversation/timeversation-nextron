@@ -3,6 +3,7 @@ import clsx from "clsx"
 // import { useRouter } from "next/router"
 import { useServer } from "components/store/useServer"
 import { useEffect, useRef, useState } from "react"
+import debounce from 'debounce'
 
 export function Register({ setAuth = () => { } }) {
 
@@ -104,6 +105,22 @@ export function Register({ setAuth = () => { } }) {
                 <input
                     ref={refUsername}
                     type="text"
+                    onInput={debounce((ev) => {
+                        //  
+                        let username = `${ev.target.value}`
+                        if (!username) {
+                            return
+                        }
+                        setAlert('')
+                        useServer.getState().checkUsernameFreeToUse({ username })
+                            .then((canUse) => {
+                                if (!canUse) {
+                                    setAlert('username-taken')
+                                } else {
+                                    setAlert('can-use-username')
+                                }
+                            })
+                    }, 500)}
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     placeholder="Username"
                 />
@@ -150,6 +167,28 @@ export function Register({ setAuth = () => { } }) {
             </div>
         </form>
 
+        {<div className={getClass(alertUI == 'can-use-username') + " fixed top-12 right-12 flex w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800"}>
+            <div className="flex items-center justify-center w-12 bg-emerald-500">
+                <svg
+                    className="w-6 h-6 text-white fill-current"
+                    viewBox="0 0 40 40"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
+                </svg>
+            </div>
+            <div className="px-4 py-2 -mx-3">
+                <div className="mx-3">
+                    <span className="font-semibold text-emerald-500 dark:text-emerald-400">
+                        Username Available
+                    </span>
+                    <p className="text-sm text-gray-600 dark:text-gray-200">
+                        {refUsername?.current?.value || ''} is available!
+                    </p>
+                </div>
+            </div>
+        </div>}
+
 
         {<div className={getClass(alertUI == 'successful') + " fixed top-12 right-12 flex w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800"}>
             <div className="flex items-center justify-center w-12 bg-emerald-500">
@@ -189,7 +228,7 @@ export function Register({ setAuth = () => { } }) {
                         Error
                     </span>
                     <p className="text-sm text-gray-600 dark:text-gray-200">
-                        Username is taken!
+                        Username "{refUsername?.current?.value || ''}" is taken!
                     </p>
                 </div>
             </div>

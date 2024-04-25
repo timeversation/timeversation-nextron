@@ -2,6 +2,7 @@ import clsx from "clsx"
 import { useServer } from "components/store/useServer"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
+import * as NProgress from 'nprogress'
 
 export function Login({ params }) {
     let [step, setSetp] = useState('username')
@@ -47,12 +48,14 @@ function LoginStepUsername({ params = {}, setStep = () => { } }) {
         <form onSubmit={(ev) => {
             ev.preventDefault()
             setAlert('')
+            NProgress.start()
 
             useServer.getState().loginUserPassword({
                 username: refUsername.current.value,
                 password: refPassword.current.value
             }).then(({ ok, data }) => {
                 //
+                NProgress.set(0.5)
                 // console.log(ok, data)
                 if (!ok) {
                     setAlert(data.error)
@@ -62,8 +65,9 @@ function LoginStepUsername({ params = {}, setStep = () => { } }) {
                     setTimeout(() => {
                         //
                         router.push('/app')
+                        NProgress.done()
                         //
-                    }, 1500)
+                    }, 1000)
                 }
             }).catch(({ data }) => {
                 setAlert(data?.error)

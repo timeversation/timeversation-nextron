@@ -1,3 +1,4 @@
+import nProgress from "nprogress";
 import { create } from "zustand";
 
 export const useServer = create((set, get) => {
@@ -69,9 +70,15 @@ export const useServer = create((set, get) => {
                     username,
                 })
             })
-                .then(res => res.ok && res.json())
-                .then(() => {
-                    return true
+                .then(res => {
+                    if (res.ok) {
+                        return res.json()
+                    } else {
+                        return false
+                    }
+                })
+                .then((res) => {
+                    return res
                 }).catch(r => {
                     console.error(r)
                     return false
@@ -139,11 +146,16 @@ export const useServer = create((set, get) => {
                     }
                 })
         },
-        logout: async ({ }) => {
+        logout: async () => {
+            nProgress.start()
             set({
                 jwt: ''
             })
             await get().saveBackendToLocalStorage()
+
+            setTimeout(() => {
+                nProgress.done()
+            }, 500)
 
         }
     }
