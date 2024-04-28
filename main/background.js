@@ -46,6 +46,21 @@ const getMainWindowWhenReady = async () => {
 
   if (isProd) {
     //
+    mainWindow.webContents.session.webRequest.onBeforeSendHeaders(
+      (details, callback) => {
+        callback({ requestHeaders: { Origin: '*', ...details.requestHeaders } });
+      },
+    );
+
+    mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+      callback({
+        responseHeaders: {
+          ...details.responseHeaders,
+          'Access-Control-Allow-Origin': ['*'],
+        },
+      });
+    });
+
     await mainWindow.loadURL('app://./home')
   } else {
     const port = process.argv[2]

@@ -12,7 +12,7 @@ export function Application() {
                 <div className='flex flex-col justify-between items-center flex-none w-16 bg-gray-200'>
                     <div className='flex flex-col w-full items-center pt-1'>
                         <a className='relative h-16 w-16 inline-flex justify-center items-center'>
-                            <FontAwesomeIcon className='h-8 w-8' icon={faBible}></FontAwesomeIcon>
+                            <FontAwesomeIcon className='h-8 w-8' icon={faGear}></FontAwesomeIcon>
                             <div className='absolute top-2 right-2 bg-red-500 w-4 h-4 text-xs text-white rounded-full text-center'>
                                 3
                             </div>
@@ -32,7 +32,7 @@ export function Application() {
                             useServer.getState().logout().then(() => {
                                 router.push('/home')
                             })
-                        }} className='relative h-16 w-16 inline-flex justify-center items-center'>
+                        }} className='relative h-16 w-16 inline-flex justify-center items-center cursor-pointer'>
                             <FontAwesomeIcon className='h-8 w-8' icon={faDoorOpen}></FontAwesomeIcon>
                         </a>
                     </div>

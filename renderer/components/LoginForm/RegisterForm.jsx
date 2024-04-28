@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import debounce from 'debounce'
 
 export function Register({ setAuth = () => { } }) {
-
+    let refCanUse = useRef()
     let cta = "bg-[#475F45] hover:bg-[#475F45]/80 duration-300 transition-colors border-2 border-[#475F45] px-6 block text-center py-3 uppercase text-sm font-bold leading-4 tracking-widest text-white"
 
     let refUsername = useRef()
@@ -98,7 +98,7 @@ export function Register({ setAuth = () => { } }) {
                     className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                     htmlFor="grid-username"
                 >
-                    Username
+                    Username <span className="ml-2 normal-case font-normal" ref={refCanUse}></span>
                 </label>
                 <input
                     ref={refUsername}
@@ -107,15 +107,23 @@ export function Register({ setAuth = () => { } }) {
                         //  
                         let username = `${ev.target.value}`
                         if (!username) {
+                            refCanUse.current.innerText = ''
                             return
                         }
-                        setAlert('')
+
+                        refCanUse.current.innerText = 'Checking...'
+                        refCanUse.current.className = 'ml-2 normal-case font-normal text-blue-500'
+                        // setAlert('')
                         useServer.getState().checkUsernameFreeToUse({ username })
                             .then((canUse) => {
                                 if (!canUse) {
-                                    setAlert('username-taken')
+                                    refCanUse.current.innerText = `"${username}" is taken!`
+                                    refCanUse.current.className = 'ml-2 normal-case font-normal text-red-500'
+                                    // setAlert('username-taken')
                                 } else {
-                                    setAlert('can-use-username')
+                                    refCanUse.current.innerText = `"${username}" is available!`
+                                    refCanUse.current.className = 'ml-2 normal-case font-normal text-green-500'
+                                    // setAlert('can-use-username')
                                 }
                             })
                     }, 500)}

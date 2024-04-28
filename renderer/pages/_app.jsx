@@ -12,12 +12,30 @@ export default function App({ Component, pageProps }) {
     //
   }, [])
 
+  useEffect(() => {
+    ; (async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { ipc: api } = window
+
+      api.onLauncherUrl((url) => {
+        console.log(url)
+      })
+
+      api.setWindowIsReady(true)
+    })()
+
+    //
+  }, [])
+
+
   return <>
     <style dangerouslySetInnerHTML={{
       __html:/*css*/`
-      h1, h2, h3, h4, h5, h6{
+
+      h1, h2, h3, h4, h5, h6, textarea, input, label{
         font-family: ${titleFont.style.fontFamily} !important;
       }
+      
         /* Make clicks pass-through */
 #nprogress {
     pointer-events: none;
