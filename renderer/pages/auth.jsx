@@ -32,7 +32,7 @@ export default function HomePage() {
               Timeversation
             </h1>
             <p className="max-w-lg mt-4 text-xl text-gray-500 text-center">
-              Save time with your words.
+              Valuable Converstaions that don't cost your time.
             </p>
 
             {/* launcher-url
